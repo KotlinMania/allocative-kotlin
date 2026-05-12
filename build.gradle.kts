@@ -20,18 +20,6 @@ plugins {
 group = "io.github.kotlinmania"
 version = "0.1.0"
 
-val androidSdkDir: String? =
-    providers.environmentVariable("ANDROID_SDK_ROOT").orNull
-        ?: providers.environmentVariable("ANDROID_HOME").orNull
-
-if (androidSdkDir != null && file(androidSdkDir).exists()) {
-    val localProperties = rootProject.file("local.properties")
-    if (!localProperties.exists()) {
-        val sdkDirPropertyValue = file(androidSdkDir).absolutePath.replace("\\", "/")
-        localProperties.writeText("sdk.dir=$sdkDirPropertyValue")
-    }
-}
-
 kotlin {
     applyDefaultHierarchyTemplate()
 
@@ -368,12 +356,15 @@ val codeqlCompileJvm = tasks.register<JavaExec>("codeqlCompileJvm") {
 tasks.register("test") {
     group = "verification"
     description =
-        "Runs a portable test suite (macOS + JS + WasmJS). Android and non-host native targets are intentionally excluded."
+        "Runs the host-portable test suite (macOS + JS + WasmJS + Android unit). " +
+        "Non-host native targets (mingwX64, linuxX64) only run on their own host."
 
     val defaultTestTasks = listOf(
         "macosArm64Test",
         "jsNodeTest",
         "wasmJsNodeTest",
+        "compileAndroidMain",
+        "assembleUnitTest",
     )
 
     dependsOn(defaultTestTasks.mapNotNull { taskName -> tasks.findByName(taskName) })
