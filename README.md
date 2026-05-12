@@ -77,7 +77,7 @@ Allocative is both MIT and Apache License, Version 2.0 licensed, as found in the
 
 ```kotlin
 dependencies {
-    implementation("io.github.kotlinmania:allocative-kotlin:0.1.0-SNAPSHOT")
+    implementation("io.github.kotlinmania:allocative-kotlin:0.1.0")
 }
 ```
 
