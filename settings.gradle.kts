@@ -17,4 +17,3 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "allocative-kotlin"
-
