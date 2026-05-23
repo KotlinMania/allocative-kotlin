@@ -198,7 +198,11 @@ kotlin {
         binaries.framework { baseName = "Allocative"; xcf.add(this) }
     }
     iosSimulatorArm64 {
-        binaries.framework { baseName = "Allocative"; xcf.add(this) }
+        binaries.framework {
+            baseName = "Allocative"
+            isStatic = true
+            xcf.add(this)
+        }
     }
     iosX64 {
         binaries.framework { baseName = "Allocative"; xcf.add(this) }
