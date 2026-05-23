@@ -52,5 +52,10 @@ public class Key internal constructor(
             val name = T::class.simpleName ?: T::class.toString()
             return new(name)
         }
+
+        public fun forTypeName(type: kotlin.reflect.KClass<*>): Key {
+            val name = type.simpleName ?: type.toString()
+            return new(name)
+        }
     }
 }
