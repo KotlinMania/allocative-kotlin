@@ -503,6 +503,14 @@ tasks.matching { it.name == "embedSwiftExportForXcode" }.configureEach {
     }
 }
 
+// Disable the sandbox check when running in CI with manually-set environment variables.
+// The checkSandboxAndWriteProtection task verifies that BUILT_PRODUCTS_DIR is writable,
+// which is meant to catch Xcode user script sandboxing issues. In CI, we're not running
+// under Xcode, so the check is not applicable.
+tasks.matching { it.name == "checkSandboxAndWriteProtection" }.configureEach {
+    enabled = false
+}
+
 val fullTargetBuildTasks = listOf(
     "compileAndroidMain",
     "compileAndroidHostTest",
