@@ -1,5 +1,4 @@
 {
-  "type": "port",
   "name": "allocative-kotlin",
   "source": {
     "path": "tmp/allocative/src",
