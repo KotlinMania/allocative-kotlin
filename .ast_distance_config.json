@@ -1,5 +1,4 @@
 {
-  "parity_mode": false,
   "name": "allocative-kotlin",
   "source": {
     "path": "tmp/allocative/src",
