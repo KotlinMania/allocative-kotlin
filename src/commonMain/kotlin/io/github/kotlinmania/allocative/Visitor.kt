@@ -1,4 +1,4 @@
-// port-lint: source src/visitor.rs
+// port-lint: source visitor.rs
 package io.github.kotlinmania.allocative
 
 /*
@@ -31,14 +31,14 @@ internal interface VisitorImpl {
      */
     fun enterInlineImpl(name: Key, size: Int, parent: NodeKind)
 
-    /** Enter field which points to heap-allocated unique memory (e.g. `Box<T>`). */
+    /** Enter a field which points to heap-allocated unique memory. */
     fun enterUniqueImpl(name: Key, size: Int, parent: NodeKind)
 
     /**
-     * Enter field which points to heap-allocated shared memory (e.g. `Arc<T>`).
-     * This function returns `false` if pointee already visited.
+     * Enter a field which points to heap-allocated shared memory.
+     * This function returns `false` if the referenced object was already visited.
      */
-    fun enterSharedImpl(name: Key, size: Int, ptr: Any, parent: NodeKind): Boolean
+    fun enterSharedImpl(name: Key, size: Int, sharedIdentity: Any, parent: NodeKind): Boolean
 
     /**
      * Exit the field. Each `enter` must be matched by `exit`.
@@ -64,10 +64,9 @@ internal enum class NodeKind {
 /**
  * Must call [exit].
  *
- * Note: Kotlin lacks `mem::size_of_val`, so size-bearing methods that the
- * upstream Rust crate computed automatically (`enterSelf`, `enterSelfSized`,
- * `visitField`) take an explicit `sizeBytes` parameter. The caller is
- * responsible for providing it.
+ * Size-bearing methods take an explicit `sizeBytes` parameter because Kotlin
+ * does not expose an automatic object-size intrinsic. The caller is responsible
+ * for providing that size.
  */
 public class Visitor internal constructor(
     internal val visitor: VisitorImpl,
@@ -85,13 +84,13 @@ public class Visitor internal constructor(
     }
 
     /**
-     * Enter a field containing a shared pointer.
+     * Enter a field containing a shared reference.
      *
      * This functions does nothing and returns `null`
-     * if pointee (`ptr` argument) was previously visited.
+     * if the referenced object was previously visited.
      */
-    public fun enterShared(name: Key, size: Int, ptr: Any): Visitor? {
-        return if (visitor.enterSharedImpl(name, size, ptr, nodeKind)) {
+    public fun enterShared(name: Key, size: Int, sharedIdentity: Any): Visitor? {
+        return if (visitor.enterSharedImpl(name, size, sharedIdentity, nodeKind)) {
             Visitor(visitor, NodeKind.Shared)
         } else {
             null
@@ -102,7 +101,7 @@ public class Visitor internal constructor(
      * This function is typically called as the first function of an `Allocative`
      * implementation to record self.
      *
-     * Kotlin has no `mem::size_of::<T>()`, so [sizeBytes] is explicit.
+     * Kotlin has no automatic type-size intrinsic, so [sizeBytes] is explicit.
      */
     public fun enterSelfSized(type: KClass<*>, sizeBytes: Int): Visitor {
         return enter(Key.forTypeName(type), sizeBytes)
@@ -112,7 +111,7 @@ public class Visitor internal constructor(
      * This function is typically called as first function of an `Allocative`
      * implementation to record self.
      *
-     * Kotlin has no `mem::size_of_val`, so [sizeBytes] is explicit.
+     * Kotlin has no automatic value-size intrinsic, so [sizeBytes] is explicit.
      */
     public fun enterSelf(self: Any, sizeBytes: Int): Visitor {
         return enter(Key.forTypeName(self::class), sizeBytes)
@@ -131,7 +130,7 @@ public class Visitor internal constructor(
     /**
      * Visit a field by delegating to its [Allocative.visit].
      *
-     * Kotlin has no `mem::size_of_val`, so [sizeBytes] is explicit.
+     * Kotlin has no automatic value-size intrinsic, so [sizeBytes] is explicit.
      */
     public fun visitField(name: Key, sizeBytes: Int, field: Allocative) {
         visitFieldWith(name, sizeBytes) { visitor ->
@@ -153,21 +152,21 @@ public class Visitor internal constructor(
     }
 
     /**
-     * Iterate the slice, calling [Allocative.visit] on each element.
+     * Iterate the list, calling [Allocative.visit] on each element.
      *
-     * Kotlin has no `mem::needs_drop` or `mem::size_of::<T>()`, so the
-     * "no-descend" shortcut from upstream Rust (`visit_simple` when `T` owns
-     * no pointers) is not reproduced; this always iterates.
+     * Kotlin has no ownership-drop or automatic type-size intrinsic, so the
+     * upstream no-descend shortcut for reference-free elements is not reproduced;
+     * this always iterates.
      */
-    public fun <T : Allocative> visitSlice(slice: List<T>) {
-        visitIter(slice)
+    public fun <T : Allocative> visitSlice(elements: List<T>) {
+        visitIter(elements)
     }
 
     /**
      * Iterate, calling [Allocative.visit] on each element.
      *
-     * Kotlin has no `mem::needs_drop` or `mem::size_of::<T>()`, so the
-     * "no-descend" shortcut from upstream Rust is not reproduced; this always
+     * Kotlin has no ownership-drop or automatic type-size intrinsic, so the
+     * upstream no-descend shortcut is not reproduced; this always
      * iterates.
      */
     public fun <T : Allocative> visitIter(iter: Iterable<T>) {
@@ -177,10 +176,10 @@ public class Visitor internal constructor(
     }
 
     /**
-     * Visit the body of a `Vec`-like container.
+     * Visit the body of a list-like container.
      *
-     * Kotlin has no `mem::size_of::<T>()`, so the per-element size is taken
-     * as [elementSizeBytes]. The caller passes `data` (the populated slice)
+     * Kotlin has no automatic type-size intrinsic, so the per-element size is taken
+     * as [elementSizeBytes]. The caller passes `data` (the populated list)
      * and `capacity` (the total allocated capacity).
      */
     public fun <T : Allocative> visitVecLikeBody(data: List<T>, capacity: Int, elementSizeBytes: Int) {
@@ -193,11 +192,11 @@ public class Visitor internal constructor(
 
     public fun <K : Allocative, V : Allocative> visitGenericMapFields(
         entries: Iterable<Pair<K, V>>,
-        pointerSizeBytes: Int,
+        referenceSizeBytes: Int,
         keySizeBytes: Int,
         valueSizeBytes: Int,
     ) {
-        visitFieldWith(DATA_NAME, pointerSizeBytes) { visitor ->
+        visitFieldWith(DATA_NAME, referenceSizeBytes) { visitor ->
             for ((k, v) in entries) {
                 visitor.visitField(KEY_NAME, keySizeBytes, k)
                 visitor.visitField(VALUE_NAME, valueSizeBytes, v)
@@ -207,10 +206,10 @@ public class Visitor internal constructor(
 
     public fun <K : Allocative> visitGenericSetFields(
         entries: Iterable<K>,
-        pointerSizeBytes: Int,
+        referenceSizeBytes: Int,
         keySizeBytes: Int,
     ) {
-        visitFieldWith(DATA_NAME, pointerSizeBytes) { visitor ->
+        visitFieldWith(DATA_NAME, referenceSizeBytes) { visitor ->
             for (k in entries) {
                 visitor.visitField(KEY_NAME, keySizeBytes, k)
             }
@@ -228,8 +227,7 @@ public class Visitor internal constructor(
 
     public fun exit() {
         exitImpl()
-        // Upstream calls `mem::forget(self)` to prevent `Drop` from re-running
-        // `exit_impl`. Kotlin has no `Drop`; this method must therefore be
-        // called explicitly by the caller, exactly once per [Visitor].
+        // Kotlin has no destructor for this wrapper; callers must explicitly
+        // close each [Visitor] exactly once.
     }
 }

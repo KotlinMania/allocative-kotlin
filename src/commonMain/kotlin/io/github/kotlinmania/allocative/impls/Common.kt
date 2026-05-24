@@ -1,4 +1,4 @@
-// port-lint: source src/impls/common.rs
+// port-lint: source impls/common.rs
 package io.github.kotlinmania.allocative.impls
 
 import io.github.kotlinmania.allocative.key.Key
@@ -12,16 +12,16 @@ import io.github.kotlinmania.allocative.key.Key
  * of this source tree.
  */
 
-/** "Field" describing allocated but unused capacity (e.g. in `List`). */
+/** "Field" describing allocated but unused capacity, for example in a list. */
 internal val UNUSED_CAPACITY_NAME: Key = Key.new("unused_capacity")
 
-/** "Field" describing all capacity (e.g. in `List`). */
+/** "Field" describing all capacity, for example in a list. */
 internal val CAPACITY_NAME: Key = Key.new("capacity")
 
-/** Generic pointee field in types like `Box`. */
+/** Generic field for a uniquely referenced value. */
 internal val PTR_NAME: Key = Key.new("ptr")
 
-/** Generic name for useful data (e.g. in `List`). */
+/** Generic name for useful data, for example in a list. */
 internal val DATA_NAME: Key = Key.new("data")
 
 internal val KEY_NAME: Key = Key.new("key")

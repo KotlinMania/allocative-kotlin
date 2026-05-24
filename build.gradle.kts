@@ -195,7 +195,11 @@ kotlin {
         binaries.framework { baseName = "Allocative"; xcf.add(this) }
     }
     iosArm64 {
-        binaries.framework { baseName = "Allocative"; xcf.add(this) }
+        binaries.framework {
+            baseName = "Allocative"
+            isStatic = true
+            xcf.add(this)
+        }
     }
     iosSimulatorArm64 {
         binaries.framework {
@@ -205,10 +209,6 @@ kotlin {
         }
     }
     iosX64 {
-        // iOS Simulator targets share an XCFramework "fat" stage that
-        // requires every input framework to be either all static or all
-        // dynamic. iosSimulatorArm64 is already declared static for the
-        // Swift Export SPM bridge, so iosX64 must match.
         binaries.framework {
             baseName = "Allocative"
             isStatic = true
