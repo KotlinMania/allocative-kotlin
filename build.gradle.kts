@@ -430,7 +430,7 @@ tasks.register("setupAndroidSdk") {
     group = "setup"
     description = "Downloads and configures the project-local Android SDK."
     doLast {
-        installProjectAndroidSdk(androidSdkExecOperations)
+        installProjectAndroidSdk(serviceOf<ExecOperations>())
     }
 }
 
