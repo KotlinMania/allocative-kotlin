@@ -26,10 +26,7 @@ internal fun addRawTableForLen(visitor: Visitor, len: Int, elementSizeBytes: Int
     }
 }
 
-// Visit an IndexSet with the same shape as the upstream Allocative impl.
-//
-// Kotlin cannot retroactively implement Allocative for an external class, so
-// callers use this helper from generated or handwritten Allocative visitors.
+// Visit an IndexSet as an ordered hash table with values and unused capacity.
 public fun <T : Allocative> visitIndexSet(
     set: IndexSet<T>,
     visitor: Visitor,
@@ -49,10 +46,7 @@ public fun <T : Allocative> visitIndexSet(
     selfVisitor.exit()
 }
 
-// Visit an IndexMap with the same shape as the upstream Allocative impl.
-//
-// Kotlin cannot retroactively implement Allocative for an external class, so
-// callers use this helper from generated or handwritten Allocative visitors.
+// Visit an IndexMap as an ordered hash table with key-value entries and unused capacity.
 public fun <K : Allocative, V : Allocative> visitIndexMap(
     map: IndexMap<K, V>,
     visitor: Visitor,
