@@ -21,67 +21,89 @@ import io.github.kotlinmania.allocative.Visitor
 // Wrapper classes intentionally mirror the project's existing `ManuallyDrop`
 // wrapper style in `Mem.kt`.
 
-public class AllocativeByte(public val value: Byte) : Allocative {
+public class AllocativeByte(
+    public val value: Byte,
+) : Allocative {
     override fun visit(visitor: Visitor) {
         visitor.visitSimpleSized(AllocativeByte::class, Byte.SIZE_BYTES)
     }
 }
 
-public class AllocativeUByte(public val value: UByte) : Allocative {
+public class AllocativeUByte(
+    public val value: UByte,
+) : Allocative {
     override fun visit(visitor: Visitor) {
         visitor.visitSimpleSized(AllocativeUByte::class, UByte.SIZE_BYTES)
     }
 }
 
-public class AllocativeShort(public val value: Short) : Allocative {
+public class AllocativeShort(
+    public val value: Short,
+) : Allocative {
     override fun visit(visitor: Visitor) {
         visitor.visitSimpleSized(AllocativeShort::class, Short.SIZE_BYTES)
     }
 }
 
-public class AllocativeUShort(public val value: UShort) : Allocative {
+public class AllocativeUShort(
+    public val value: UShort,
+) : Allocative {
     override fun visit(visitor: Visitor) {
         visitor.visitSimpleSized(AllocativeUShort::class, UShort.SIZE_BYTES)
     }
 }
 
-public class AllocativeInt(public val value: Int) : Allocative {
+public class AllocativeInt(
+    public val value: Int,
+) : Allocative {
     override fun visit(visitor: Visitor) {
         visitor.visitSimpleSized(AllocativeInt::class, Int.SIZE_BYTES)
     }
 }
 
-public class AllocativeUInt(public val value: UInt) : Allocative {
+public class AllocativeUInt(
+    public val value: UInt,
+) : Allocative {
     override fun visit(visitor: Visitor) {
         visitor.visitSimpleSized(AllocativeUInt::class, UInt.SIZE_BYTES)
     }
 }
 
-public class AllocativeLong(public val value: Long) : Allocative {
+public class AllocativeLong(
+    public val value: Long,
+) : Allocative {
     override fun visit(visitor: Visitor) {
         visitor.visitSimpleSized(AllocativeLong::class, Long.SIZE_BYTES)
     }
 }
 
-public class AllocativeULong(public val value: ULong) : Allocative {
+public class AllocativeULong(
+    public val value: ULong,
+) : Allocative {
     override fun visit(visitor: Visitor) {
         visitor.visitSimpleSized(AllocativeULong::class, ULong.SIZE_BYTES)
     }
 }
 
-public class AllocativeFloat(public val value: Float) : Allocative {
+public class AllocativeFloat(
+    public val value: Float,
+) : Allocative {
     override fun visit(visitor: Visitor) {
         visitor.visitSimpleSized(AllocativeFloat::class, Float.SIZE_BYTES)
     }
 }
 
-public class AllocativeDouble(public val value: Double) : Allocative {
+public class AllocativeDouble(
+    public val value: Double,
+) : Allocative {
     override fun visit(visitor: Visitor) {
         visitor.visitSimpleSized(AllocativeDouble::class, Double.SIZE_BYTES)
     }
 }
 
-public class AllocativeBoolean(public val value: Boolean) : Allocative {
+public class AllocativeBoolean(
+    public val value: Boolean,
+) : Allocative {
     override fun visit(visitor: Visitor) {
         // Boolean has no `SIZE_BYTES` constant in the Kotlin stdlib; on every
         // currently-supported target the JVM/Native ABI encodes a Boolean

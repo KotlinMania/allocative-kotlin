@@ -15,7 +15,6 @@ public class Key internal constructor(
     internal val hash: ULong,
     public val s: String,
 ) : Comparable<Key> {
-
     override fun equals(other: Any?): Boolean =
         this === other || (other is Key && hash == other.hash && s == other.s)
 

@@ -72,7 +72,6 @@ public class Visitor internal constructor(
     internal val visitor: VisitorImpl,
     internal val nodeKind: NodeKind,
 ) {
-
     public fun enter(name: Key, size: Int): Visitor {
         visitor.enterInlineImpl(name, size, nodeKind)
         return Visitor(visitor, NodeKind.Inline)
@@ -89,13 +88,12 @@ public class Visitor internal constructor(
      * This functions does nothing and returns `null`
      * if the referenced object was previously visited.
      */
-    public fun enterShared(name: Key, size: Int, sharedIdentity: Any): Visitor? {
-        return if (visitor.enterSharedImpl(name, size, sharedIdentity, nodeKind)) {
+    public fun enterShared(name: Key, size: Int, sharedIdentity: Any): Visitor? =
+        if (visitor.enterSharedImpl(name, size, sharedIdentity, nodeKind)) {
             Visitor(visitor, NodeKind.Shared)
         } else {
             null
         }
-    }
 
     /**
      * This function is typically called as the first function of an `Allocative`
@@ -103,9 +101,7 @@ public class Visitor internal constructor(
      *
      * Kotlin has no automatic type-size intrinsic, so [sizeBytes] is explicit.
      */
-    public fun enterSelfSized(type: KClass<*>, sizeBytes: Int): Visitor {
-        return enter(Key.forTypeName(type), sizeBytes)
-    }
+    public fun enterSelfSized(type: KClass<*>, sizeBytes: Int): Visitor = enter(Key.forTypeName(type), sizeBytes)
 
     /**
      * This function is typically called as first function of an `Allocative`
@@ -113,9 +109,7 @@ public class Visitor internal constructor(
      *
      * Kotlin has no automatic value-size intrinsic, so [sizeBytes] is explicit.
      */
-    public fun enterSelf(self: Any, sizeBytes: Int): Visitor {
-        return enter(Key.forTypeName(self::class), sizeBytes)
-    }
+    public fun enterSelf(value: Any, sizeBytes: Int): Visitor = enter(Key.forTypeName(value::class), sizeBytes)
 
     /** Visit simple sized field (e.g. `UInt`) without descending into children. */
     public fun visitSimple(name: Key, size: Int) {
