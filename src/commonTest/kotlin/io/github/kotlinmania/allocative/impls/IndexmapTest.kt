@@ -46,7 +46,9 @@ private class RecordingVisitorImpl : VisitorImpl {
     }
 }
 
-private class SizedValue(private val label: String) : Allocative {
+private class SizedValue(
+    private val label: String,
+) : Allocative {
     override fun visit(visitor: Visitor) {
         visitor.visitSimple(Key.new(label), 1)
     }
