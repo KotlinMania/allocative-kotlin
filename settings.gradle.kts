@@ -15,4 +15,4 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "allocative-kotlin"
+rootProject.name = "proc-macro-kotlin"
