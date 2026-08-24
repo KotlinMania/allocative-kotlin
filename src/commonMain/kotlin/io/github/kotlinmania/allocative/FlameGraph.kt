@@ -159,12 +159,12 @@ public class FlameGraphBuilder {
 
     private val visitorImpl =
         object : VisitorImpl {
-            override fun enterInlineImpl(name: Key, size: Int, _parent: NodeKind) {
+            override fun enterInlineImpl(name: Key, size: Int, parent: NodeKind) {
                 down(name)
                 trees[current.tree].size += size
             }
 
-            override fun enterUniqueImpl(name: Key, size: Int, _parent: NodeKind) {
+            override fun enterUniqueImpl(name: Key, size: Int, parent: NodeKind) {
                 down(name)
                 trees[current.tree].size += size
                 trees[current.tree].unique = true
@@ -174,7 +174,7 @@ public class FlameGraphBuilder {
                 name: Key,
                 size: Int,
                 sharedIdentity: Any,
-                _parent: NodeKind,
+                parent: NodeKind,
             ): Boolean {
                 down(name)
                 trees[current.tree].size += size
