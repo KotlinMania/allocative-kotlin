@@ -163,8 +163,8 @@ public class Visitor internal constructor(
      * upstream no-descend shortcut is not reproduced; this always
      * iterates.
      */
-    public fun <T : Allocative> visitIter(iter: Iterable<T>) {
-        for (item in iter) {
+    public fun <T : Allocative> visitIter(elements: List<T>) {
+        for (item in elements) {
             item.visit(this)
         }
     }
@@ -176,7 +176,7 @@ public class Visitor internal constructor(
      * as [elementSizeBytes]. The caller passes `data` (the populated list)
      * and `capacity` (the total allocated capacity).
      */
-    public fun <T : Allocative> visitVecLikeBody(data: List<T>, capacity: Int, elementSizeBytes: Int) {
+    internal fun <T : Allocative> visitVecLikeBody(data: List<T>, capacity: Int, elementSizeBytes: Int) {
         visitFieldWith(CAPACITY_NAME, elementSizeBytes * capacity) { visitor ->
             visitor.visitSlice(data)
             val unused = (capacity - data.size).coerceAtLeast(0)
@@ -184,8 +184,8 @@ public class Visitor internal constructor(
         }
     }
 
-    public fun <K : Allocative, V : Allocative> visitGenericMapFields(
-        entries: Iterable<Pair<K, V>>,
+    internal fun <K : Allocative, V : Allocative> visitGenericMapFields(
+        entries: List<Pair<K, V>>,
         referenceSizeBytes: Int,
         keySizeBytes: Int,
         valueSizeBytes: Int,
@@ -198,8 +198,8 @@ public class Visitor internal constructor(
         }
     }
 
-    public fun <K : Allocative> visitGenericSetFields(
-        entries: Iterable<K>,
+    internal fun <K : Allocative> visitGenericSetFields(
+        entries: List<K>,
         referenceSizeBytes: Int,
         keySizeBytes: Int,
     ) {
