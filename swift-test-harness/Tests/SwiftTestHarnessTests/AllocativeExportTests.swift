@@ -1,4 +1,4 @@
-import XCTest
+import Testing
 import Allocative
 
 // Smoke test for the Kotlin → Swift Export → SPM → swift test pipeline.
@@ -28,8 +28,8 @@ import Allocative
 // Add more meaningful per-API tests below as the Swift Export surface
 // grows. For now the import + a single passing assertion is the
 // canary that the pipeline is green for this repo.
-final class AllocativeExportTests: XCTestCase {
-    func testSwiftModuleLoads() throws {
-        XCTAssertTrue(true, "Allocative swift module imported cleanly")
+@Suite struct AllocativeExportTests {
+    @Test func testSwiftModuleLoads() throws {
+        #expect(Bool(true), "Allocative swift module imported cleanly")
     }
 }
