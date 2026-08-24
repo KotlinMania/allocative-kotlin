@@ -4,19 +4,19 @@ Based on AST analysis, here are the concrete next steps.
 
 ## Summary
 
-- **Files Present:** 8/51 (15.7%)
-- **Function parity:** 24/224 matched (target 53) — 10.7%
-- **Class/type parity:** 5/53 matched (target 20) — 9.4%
-- **Combined symbol parity:** 29/277 matched (target 73) — 10.5%
-- **Average inline-code cosine:** 0.63 (function body across 8 matched files)
-- **Average documentation cosine:** 0.50 (doc text across 8 matched files)
+- **Files Present:** 19/51 (37.3%)
+- **Function parity:** 82/193 matched (target 154) — 42.5%
+- **Class/type parity:** 16/53 matched (target 66) — 30.2%
+- **Combined symbol parity:** 98/246 matched (target 220) — 39.8%
+- **Average inline-code cosine:** 0.52 (function body across 19 matched files)
+- **Average documentation cosine:** 0.34 (doc text across 19 matched files)
 - **Cheat-zeroed Files:** 1
-- **Critical Issues:** 3 files with <0.60 function similarity
+- **Critical Issues:** 11 files with <0.60 function similarity
 
 ## Priority 1: Fix Incomplete High-Dependency Files
 
 ### 1. visitor
-- **Similarity:** 0.69 (needs 16% improvement)
+- **Similarity:** 0.68 (needs 17% improvement)
 - **Dependencies:** 37
 - **Priority Score:** 37012004.0
 - **Functions:** 16/17 matched (target 16)
@@ -60,7 +60,7 @@ Every matched file is listed below with function and type symbol parity.
 ### 1. visitor
 
 - **Target:** `allocative.Visitor`
-- **Similarity:** 0.69
+- **Similarity:** 0.68
 - **Dependents:** 37
 - **Priority Score:** 37012004.0
 - **Functions:** 16/17 matched (target 16)
@@ -90,7 +90,19 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 0/0 matched (target 1)
 - **Missing types:** _none_
 
-### 4. impls.hashbrown_util
+### 4. flamegraph
+
+- **Target:** `allocative.FlameGraph`
+- **Similarity:** 0.62
+- **Dependents:** 1
+- **Priority Score:** 1155503.8
+- **Functions:** 33/43 matched (target 37)
+- **Missing functions:** `flamegraph`, `warnings`, `as_ref`, `index`, `index_mut`, `current_data`, `_assert_flame_graph_builder_is_send`, `assert_send`, `default`, `current`
+- **Types:** 7/12 matched (target 9)
+- **Missing types:** `TreeId`, `Trees`, `Output`, `TreeStackRef`, `VisitedSharedPointer`
+- **Tests:** 6/6 matched
+
+### 5. impls.hashbrown_util
 
 - **Target:** `impls.HashbrownUtil`
 - **Similarity:** 0.82
@@ -101,7 +113,78 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 0/0 matched
 - **Missing types:** _none_
 
-### 5. impls.indexmap
+### 6. rc_str
+
+- **Target:** `allocative.RcStr`
+- **Similarity:** 0.28
+- **Dependents:** 0
+- **Priority Score:** 40807.2
+- **Functions:** 3/6 matched (target 10)
+- **Missing functions:** `deref`, `borrow`, `hash`
+- **Types:** 1/2 matched
+- **Missing types:** `Target`
+
+### 7. std.sync
+
+- **Target:** `std.Sync`
+- **Similarity:** 0.15
+- **Dependents:** 0
+- **Priority Score:** 40508.5
+- **Functions:** 1/3 matched (target 4)
+- **Missing functions:** `layout`, `test_arc_align`
+- **Types:** 0/2 matched (target 4)
+- **Missing types:** `RcBox`, `CacheLine`
+- **Tests:** 0/1 matched
+
+### 8. std.cell
+
+- **Target:** `std.Cell`
+- **Similarity:** 0.25
+- **Dependents:** 0
+- **Priority Score:** 30407.5
+- **Functions:** 1/4 matched (target 6)
+- **Missing functions:** `test_default`, `test_borrowed`, `test_once_cell`
+- **Types:** 0/0 matched (target 2)
+- **Missing types:** _none_
+- **Tests:** 0/3 matched
+
+### 9. size_of
+
+- **Target:** `allocative.SizeOf`
+- **Similarity:** 0.67
+- **Dependents:** 0
+- **Priority Score:** 11503.3
+- **Functions:** 12/12 matched (target 16)
+- **Missing functions:** _none_
+- **Types:** 2/3 matched (target 6)
+- **Missing types:** `Boxed`
+- **Tests:** 3/3 matched
+
+### 10. impls.either
+
+- **Target:** `impls.Either`
+- **Similarity:** 0.32
+- **Dependents:** 0
+- **Priority Score:** 10206.8
+- **Functions:** 1/2 matched (target 3)
+- **Missing functions:** `test_golden`
+- **Types:** 0/0 matched (target 4)
+- **Missing types:** _none_
+- **Tests:** 0/1 matched
+
+### 11. global_root
+
+- **Target:** `allocative.GlobalRoot`
+- **Similarity:** 0.55
+- **Dependents:** 0
+- **Priority Score:** 404.5
+- **Functions:** 3/3 matched (target 4)
+- **Missing functions:** _none_
+- **Types:** 1/1 matched (target 2)
+- **Missing types:** _none_
+- **Tests:** 1/1 matched
+
+### 12. impls.indexmap
 
 - **Target:** `impls.Indexmap`
 - **Similarity:** 0.54
@@ -112,7 +195,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 0/0 matched (target 3)
 - **Missing types:** _none_
 
-### 6. std.primitive
+### 13. std.primitive
 
 - **Target:** `std.Primitive [ZERO]`
 - **Similarity:** 0.00
@@ -123,7 +206,51 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 0/0 matched (target 11)
 - **Missing types:** _none_
 
-### 7. allocative_trait
+### 14. std.tuple
+
+- **Target:** `std.Tuple`
+- **Similarity:** 0.32
+- **Dependents:** 0
+- **Priority Score:** 106.8
+- **Functions:** 1/1 matched (target 3)
+- **Missing functions:** _none_
+- **Types:** 0/0 matched (target 3)
+- **Missing types:** _none_
+
+### 15. std.time
+
+- **Target:** `std.Time`
+- **Similarity:** 0.49
+- **Dependents:** 0
+- **Priority Score:** 105.1
+- **Functions:** 1/1 matched (target 4)
+- **Missing functions:** _none_
+- **Types:** 0/0 matched (target 2)
+- **Missing types:** _none_
+
+### 16. std.collections
+
+- **Target:** `std.Collections`
+- **Similarity:** 0.52
+- **Dependents:** 0
+- **Priority Score:** 104.8
+- **Functions:** 1/1 matched (target 6)
+- **Missing functions:** _none_
+- **Types:** 0/0 matched (target 3)
+- **Missing types:** _none_
+
+### 17. impls.serde_json
+
+- **Target:** `impls.SerdeJson`
+- **Similarity:** 0.76
+- **Dependents:** 0
+- **Priority Score:** 102.4
+- **Functions:** 1/1 matched (target 8)
+- **Missing functions:** _none_
+- **Types:** 0/0 matched (target 9)
+- **Missing types:** _none_
+
+### 18. allocative_trait
 
 - **Target:** `allocative.AllocativeTrait`
 - **Similarity:** 1.00
@@ -134,7 +261,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 1/1 matched
 - **Missing types:** _none_
 
-### 8. impls.common
+### 19. impls.common
 
 - **Target:** `impls.Common`
 - **Similarity:** 1.00
