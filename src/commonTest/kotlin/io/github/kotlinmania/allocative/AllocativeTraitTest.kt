@@ -6,7 +6,9 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class AllocativeTraitTest {
-    private class SimpleNode(val size: Int) : Allocative {
+    private class SimpleNode(
+        val size: Int,
+    ) : Allocative {
         override fun visit(visitor: Visitor) {
             val self = visitor.enterSelf(this, size)
             self.visitSimple(Key.new("size"), 4)
