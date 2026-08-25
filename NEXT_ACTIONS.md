@@ -101,7 +101,6 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 7/12 matched (target 9)
 - **Missing types:** `TreeId`, `Trees`, `Output`, `TreeStackRef`, `VisitedSharedPointer`
 - **Tests:** 6/6 matched
-- **Lint issues:** 3
 
 ### 5. impls.hashbrown_util
 
