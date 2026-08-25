@@ -4,14 +4,14 @@ Based on AST analysis, here are the concrete next steps.
 
 ## Summary
 
-- **Files Present:** 19/52 (36.5%)
-- **Function parity:** 82/195 matched (target 154) — 42.1%
-- **Class/type parity:** 16/53 matched (target 66) — 30.2%
-- **Combined symbol parity:** 98/248 matched (target 220) — 39.5%
-- **Average inline-code cosine:** 0.52 (function body across 19 matched files)
+- **Files Present:** 19/51 (37.3%)
+- **Function parity:** 82/193 matched (target 156) — 42.5%
+- **Class/type parity:** 16/53 matched (target 68) — 30.2%
+- **Combined symbol parity:** 98/246 matched (target 224) — 39.8%
+- **Average inline-code cosine:** 0.47 (function body across 19 matched files)
 - **Average documentation cosine:** 0.34 (doc text across 19 matched files)
-- **Cheat-zeroed Files:** 1
-- **Critical Issues:** 11 files with <0.60 function similarity
+- **Cheat-zeroed Files:** 2
+- **Critical Issues:** 12 files with <0.60 function similarity
 
 ## Priority 1: Fix Incomplete High-Dependency Files
 
@@ -59,7 +59,7 @@ Every matched file is listed below with function and type symbol parity.
 
 ### 1. visitor
 
-- **Target:** `allocative.Visitor [PROVENANCE-FALLBACK]`
+- **Target:** `allocative.Visitor`
 - **Similarity:** 0.68
 - **Dependents:** 37
 - **Priority Score:** 37012004.0
@@ -67,13 +67,10 @@ Every matched file is listed below with function and type symbol parity.
 - **Missing functions:** `drop`
 - **Types:** 3/3 matched
 - **Missing types:** _none_
-- **Provenance warning:** port-lint provenance header matched only after fallback normalization: `visitor.rs` vs expected `visitor.rs`
-- **Proposed provenance header:** `// port-lint: source visitor.rs` (current: `// port-lint: source visitor.rs`)
-- **Lint issues:** 1
 
 ### 2. key
 
-- **Target:** `key.Key [PROVENANCE-FALLBACK]`
+- **Target:** `key.Key`
 - **Similarity:** 0.25
 - **Dependents:** 19
 - **Priority Score:** 19061008.0
@@ -81,13 +78,10 @@ Every matched file is listed below with function and type symbol parity.
 - **Missing functions:** `partial_cmp`, `cmp`, `hash`, `deref`
 - **Types:** 1/3 matched (target 1)
 - **Missing types:** `Target`, `AllocativeKeyForType`
-- **Provenance warning:** port-lint provenance header matched only after fallback normalization: `key.rs` vs expected `key.rs`
-- **Proposed provenance header:** `// port-lint: source key.rs` (current: `// port-lint: source key.rs`)
-- **Lint issues:** 1
 
 ### 3. std.mem
 
-- **Target:** `std.Mem [PROVENANCE-FALLBACK]`
+- **Target:** `std.Mem`
 - **Similarity:** 0.70
 - **Dependents:** 17
 - **Priority Score:** 17000104.0
@@ -95,13 +89,10 @@ Every matched file is listed below with function and type symbol parity.
 - **Missing functions:** _none_
 - **Types:** 0/0 matched (target 1)
 - **Missing types:** _none_
-- **Provenance warning:** port-lint provenance header matched only after fallback normalization: `impls/std/mem.rs` vs expected `impls/std/mem.rs`
-- **Proposed provenance header:** `// port-lint: source impls/std/mem.rs` (current: `// port-lint: source impls/std/mem.rs`)
-- **Lint issues:** 1
 
 ### 4. flamegraph
 
-- **Target:** `allocative.FlameGraph [PROVENANCE-FALLBACK]`
+- **Target:** `allocative.FlameGraph`
 - **Similarity:** 0.62
 - **Dependents:** 1
 - **Priority Score:** 1155503.8
@@ -110,15 +101,11 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 7/12 matched (target 9)
 - **Missing types:** `TreeId`, `Trees`, `Output`, `TreeStackRef`, `VisitedSharedPointer`
 - **Tests:** 6/6 matched
-- **Provenance warning:** port-lint provenance header matched only after fallback normalization: `flamegraph.rs` vs expected `flamegraph.rs`
-- **Provenance warning:** port-lint provenance header matched only after fallback normalization: `tests:flamegraph.rs` vs expected `flamegraph.rs`
-- **Proposed provenance header:** `// port-lint: source flamegraph.rs` (current: `// port-lint: source flamegraph.rs`)
-- **Proposed provenance header:** `// port-lint: tests flamegraph.rs` (current: `// port-lint: tests flamegraph.rs`)
-- **Lint issues:** 5
+- **Lint issues:** 3
 
 ### 5. impls.hashbrown_util
 
-- **Target:** `impls.HashbrownUtil [PROVENANCE-FALLBACK]`
+- **Target:** `impls.HashbrownUtil`
 - **Similarity:** 0.82
 - **Dependents:** 1
 - **Priority Score:** 1000101.8
@@ -126,13 +113,10 @@ Every matched file is listed below with function and type symbol parity.
 - **Missing functions:** _none_
 - **Types:** 0/0 matched
 - **Missing types:** _none_
-- **Provenance warning:** port-lint provenance header matched only after fallback normalization: `impls/hashbrown_util.rs` vs expected `impls/hashbrown_util.rs`
-- **Proposed provenance header:** `// port-lint: source impls/hashbrown_util.rs` (current: `// port-lint: source impls/hashbrown_util.rs`)
-- **Lint issues:** 1
 
 ### 6. rc_str
 
-- **Target:** `allocative.RcStr [PROVENANCE-FALLBACK]`
+- **Target:** `allocative.RcStr`
 - **Similarity:** 0.28
 - **Dependents:** 0
 - **Priority Score:** 40807.2
@@ -140,15 +124,10 @@ Every matched file is listed below with function and type symbol parity.
 - **Missing functions:** `deref`, `borrow`, `hash`
 - **Types:** 1/2 matched
 - **Missing types:** `Target`
-- **Provenance warning:** port-lint provenance header matched only after fallback normalization: `rc_str.rs` vs expected `rc_str.rs`
-- **Provenance warning:** port-lint provenance header matched only after fallback normalization: `tests:rc_str.rs` vs expected `rc_str.rs`
-- **Proposed provenance header:** `// port-lint: source rc_str.rs` (current: `// port-lint: source rc_str.rs`)
-- **Proposed provenance header:** `// port-lint: tests rc_str.rs` (current: `// port-lint: tests rc_str.rs`)
-- **Lint issues:** 2
 
 ### 7. std.sync
 
-- **Target:** `std.Sync [PROVENANCE-FALLBACK]`
+- **Target:** `std.Sync`
 - **Similarity:** 0.15
 - **Dependents:** 0
 - **Priority Score:** 40508.5
@@ -157,13 +136,10 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 0/2 matched (target 4)
 - **Missing types:** `RcBox`, `CacheLine`
 - **Tests:** 0/1 matched
-- **Provenance warning:** port-lint provenance header matched only after fallback normalization: `impls/std/sync.rs` vs expected `impls/std/sync.rs`
-- **Proposed provenance header:** `// port-lint: source impls/std/sync.rs` (current: `// port-lint: source impls/std/sync.rs`)
-- **Lint issues:** 1
 
 ### 8. std.cell
 
-- **Target:** `std.Cell [PROVENANCE-FALLBACK]`
+- **Target:** `std.Cell`
 - **Similarity:** 0.25
 - **Dependents:** 0
 - **Priority Score:** 30407.5
@@ -172,13 +148,10 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 0/0 matched (target 2)
 - **Missing types:** _none_
 - **Tests:** 0/3 matched
-- **Provenance warning:** port-lint provenance header matched only after fallback normalization: `impls/std/cell.rs` vs expected `impls/std/cell.rs`
-- **Proposed provenance header:** `// port-lint: source impls/std/cell.rs` (current: `// port-lint: source impls/std/cell.rs`)
-- **Lint issues:** 1
 
 ### 9. size_of
 
-- **Target:** `allocative.SizeOf [PROVENANCE-FALLBACK]`
+- **Target:** `allocative.SizeOf`
 - **Similarity:** 0.67
 - **Dependents:** 0
 - **Priority Score:** 11503.3
@@ -187,15 +160,10 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 2/3 matched (target 6)
 - **Missing types:** `Boxed`
 - **Tests:** 3/3 matched
-- **Provenance warning:** port-lint provenance header matched only after fallback normalization: `size_of.rs` vs expected `size_of.rs`
-- **Provenance warning:** port-lint provenance header matched only after fallback normalization: `tests:size_of.rs` vs expected `size_of.rs`
-- **Proposed provenance header:** `// port-lint: source size_of.rs` (current: `// port-lint: source size_of.rs`)
-- **Proposed provenance header:** `// port-lint: tests size_of.rs` (current: `// port-lint: tests size_of.rs`)
-- **Lint issues:** 2
 
 ### 10. impls.either
 
-- **Target:** `impls.Either [PROVENANCE-FALLBACK]`
+- **Target:** `impls.Either`
 - **Similarity:** 0.32
 - **Dependents:** 0
 - **Priority Score:** 10206.8
@@ -204,15 +172,10 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 0/0 matched (target 4)
 - **Missing types:** _none_
 - **Tests:** 0/1 matched
-- **Provenance warning:** port-lint provenance header matched only after fallback normalization: `impls/either.rs` vs expected `impls/either.rs`
-- **Provenance warning:** port-lint provenance header matched only after fallback normalization: `tests:impls/either.rs` vs expected `impls/either.rs`
-- **Proposed provenance header:** `// port-lint: source impls/either.rs` (current: `// port-lint: source impls/either.rs`)
-- **Proposed provenance header:** `// port-lint: tests impls/either.rs` (current: `// port-lint: tests impls/either.rs`)
-- **Lint issues:** 2
 
 ### 11. global_root
 
-- **Target:** `allocative.GlobalRoot [PROVENANCE-FALLBACK]`
+- **Target:** `allocative.GlobalRoot`
 - **Similarity:** 0.55
 - **Dependents:** 0
 - **Priority Score:** 404.5
@@ -221,15 +184,10 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 1/1 matched (target 2)
 - **Missing types:** _none_
 - **Tests:** 1/1 matched
-- **Provenance warning:** port-lint provenance header matched only after fallback normalization: `global_root.rs` vs expected `global_root.rs`
-- **Provenance warning:** port-lint provenance header matched only after fallback normalization: `tests:global_root.rs` vs expected `global_root.rs`
-- **Proposed provenance header:** `// port-lint: source global_root.rs` (current: `// port-lint: source global_root.rs`)
-- **Proposed provenance header:** `// port-lint: tests global_root.rs` (current: `// port-lint: tests global_root.rs`)
-- **Lint issues:** 2
 
 ### 12. impls.indexmap
 
-- **Target:** `impls.Indexmap [PROVENANCE-FALLBACK]`
+- **Target:** `impls.Indexmap`
 - **Similarity:** 0.54
 - **Dependents:** 0
 - **Priority Score:** 204.6
@@ -237,15 +195,21 @@ Every matched file is listed below with function and type symbol parity.
 - **Missing functions:** _none_
 - **Types:** 0/0 matched (target 3)
 - **Missing types:** _none_
-- **Provenance warning:** port-lint provenance header matched only after fallback normalization: `impls/indexmap.rs` vs expected `impls/indexmap.rs`
-- **Provenance warning:** port-lint provenance header matched only after fallback normalization: `tests:impls/indexmap.rs` vs expected `impls/indexmap.rs`
-- **Proposed provenance header:** `// port-lint: source impls/indexmap.rs` (current: `// port-lint: source impls/indexmap.rs`)
-- **Proposed provenance header:** `// port-lint: tests impls/indexmap.rs` (current: `// port-lint: tests impls/indexmap.rs`)
-- **Lint issues:** 2
 
-### 13. std.primitive
+### 13. allocative_trait
 
-- **Target:** `std.Primitive [ZERO] [PROVENANCE-FALLBACK]`
+- **Target:** `allocative.AllocativeTrait [ZERO]`
+- **Similarity:** 0.00
+- **Dependents:** 0
+- **Priority Score:** 110.0
+- **Functions:** 0/0 matched (target 2)
+- **Missing functions:** _none_
+- **Types:** 1/1 matched (target 3)
+- **Missing types:** _none_
+
+### 14. std.primitive
+
+- **Target:** `std.Primitive [ZERO]`
 - **Similarity:** 0.00
 - **Dependents:** 0
 - **Priority Score:** 110.0
@@ -253,13 +217,10 @@ Every matched file is listed below with function and type symbol parity.
 - **Missing functions:** _none_
 - **Types:** 0/0 matched (target 11)
 - **Missing types:** _none_
-- **Provenance warning:** port-lint provenance header matched only after fallback normalization: `impls/std/primitive.rs` vs expected `impls/std/primitive.rs`
-- **Proposed provenance header:** `// port-lint: source impls/std/primitive.rs` (current: `// port-lint: source impls/std/primitive.rs`)
-- **Lint issues:** 1
 
-### 14. std.tuple
+### 15. std.tuple
 
-- **Target:** `std.Tuple [PROVENANCE-FALLBACK]`
+- **Target:** `std.Tuple`
 - **Similarity:** 0.32
 - **Dependents:** 0
 - **Priority Score:** 106.8
@@ -267,13 +228,10 @@ Every matched file is listed below with function and type symbol parity.
 - **Missing functions:** _none_
 - **Types:** 0/0 matched (target 3)
 - **Missing types:** _none_
-- **Provenance warning:** port-lint provenance header matched only after fallback normalization: `impls/std/tuple.rs` vs expected `impls/std/tuple.rs`
-- **Proposed provenance header:** `// port-lint: source impls/std/tuple.rs` (current: `// port-lint: source impls/std/tuple.rs`)
-- **Lint issues:** 1
 
-### 15. std.time
+### 16. std.time
 
-- **Target:** `std.Time [PROVENANCE-FALLBACK]`
+- **Target:** `std.Time`
 - **Similarity:** 0.49
 - **Dependents:** 0
 - **Priority Score:** 105.1
@@ -281,13 +239,10 @@ Every matched file is listed below with function and type symbol parity.
 - **Missing functions:** _none_
 - **Types:** 0/0 matched (target 2)
 - **Missing types:** _none_
-- **Provenance warning:** port-lint provenance header matched only after fallback normalization: `impls/std/time.rs` vs expected `impls/std/time.rs`
-- **Proposed provenance header:** `// port-lint: source impls/std/time.rs` (current: `// port-lint: source impls/std/time.rs`)
-- **Lint issues:** 1
 
-### 16. std.collections
+### 17. std.collections
 
-- **Target:** `std.Collections [PROVENANCE-FALLBACK]`
+- **Target:** `std.Collections`
 - **Similarity:** 0.52
 - **Dependents:** 0
 - **Priority Score:** 104.8
@@ -295,13 +250,10 @@ Every matched file is listed below with function and type symbol parity.
 - **Missing functions:** _none_
 - **Types:** 0/0 matched (target 3)
 - **Missing types:** _none_
-- **Provenance warning:** port-lint provenance header matched only after fallback normalization: `impls/std/collections.rs` vs expected `impls/std/collections.rs`
-- **Proposed provenance header:** `// port-lint: source impls/std/collections.rs` (current: `// port-lint: source impls/std/collections.rs`)
-- **Lint issues:** 1
 
-### 17. impls.serde_json
+### 18. impls.serde_json
 
-- **Target:** `impls.SerdeJson [PROVENANCE-FALLBACK]`
+- **Target:** `impls.SerdeJson`
 - **Similarity:** 0.76
 - **Dependents:** 0
 - **Priority Score:** 102.4
@@ -309,27 +261,10 @@ Every matched file is listed below with function and type symbol parity.
 - **Missing functions:** _none_
 - **Types:** 0/0 matched (target 9)
 - **Missing types:** _none_
-- **Provenance warning:** port-lint provenance header matched only after fallback normalization: `impls/serde_json.rs` vs expected `impls/serde_json.rs`
-- **Proposed provenance header:** `// port-lint: source impls/serde_json.rs` (current: `// port-lint: source impls/serde_json.rs`)
-- **Lint issues:** 1
-
-### 18. allocative_trait
-
-- **Target:** `allocative.AllocativeTrait [PROVENANCE-FALLBACK]`
-- **Similarity:** 1.00
-- **Dependents:** 0
-- **Priority Score:** 100.0
-- **Functions:** 0/0 matched
-- **Missing functions:** _none_
-- **Types:** 1/1 matched
-- **Missing types:** _none_
-- **Provenance warning:** port-lint provenance header matched only after fallback normalization: `allocative_trait.rs` vs expected `allocative_trait.rs`
-- **Proposed provenance header:** `// port-lint: source allocative_trait.rs` (current: `// port-lint: source allocative_trait.rs`)
-- **Lint issues:** 1
 
 ### 19. impls.common
 
-- **Target:** `impls.Common [PROVENANCE-FALLBACK]`
+- **Target:** `impls.Common`
 - **Similarity:** 1.00
 - **Dependents:** 0
 - **Priority Score:** 0.0
@@ -337,9 +272,6 @@ Every matched file is listed below with function and type symbol parity.
 - **Missing functions:** _none_
 - **Types:** 0/0 matched
 - **Missing types:** _none_
-- **Provenance warning:** port-lint provenance header matched only after fallback normalization: `impls/common.rs` vs expected `impls/common.rs`
-- **Proposed provenance header:** `// port-lint: source impls/common.rs` (current: `// port-lint: source impls/common.rs`)
-- **Lint issues:** 1
 
 ## Success Criteria
 
@@ -361,5 +293,5 @@ do not treat them as the next implementation target by default.
 
 | Source | Expected target | Deps | Source path | Expected path |
 |--------|-----------------|------|-------------|---------------|
-| `lib` | `Lib` | 0 | `src/lib.rs` | `Lib.kt` |
+| `lib` | `Lib` | 0 | `lib.rs` | `Lib.kt` |
 
