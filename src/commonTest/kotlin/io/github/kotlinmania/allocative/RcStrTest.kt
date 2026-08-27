@@ -1,4 +1,4 @@
-// port-lint: tests allocative/src/rc_str.rs
+// port-lint: tests rc_str.rs
 package io.github.kotlinmania.allocative
 
 import kotlin.test.Test

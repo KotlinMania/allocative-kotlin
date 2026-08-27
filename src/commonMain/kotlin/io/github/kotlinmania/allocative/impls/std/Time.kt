@@ -1,4 +1,4 @@
-// port-lint: source allocative/src/impls/std/time.rs
+// port-lint: source impls/std/time.rs
 package io.github.kotlinmania.allocative.impls.std
 
 /*

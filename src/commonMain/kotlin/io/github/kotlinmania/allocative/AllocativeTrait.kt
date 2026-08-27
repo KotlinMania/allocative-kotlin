@@ -1,4 +1,4 @@
-// port-lint: source allocative/src/allocative_trait.rs
+// port-lint: source allocative_trait.rs
 package io.github.kotlinmania.allocative
 
 /*
