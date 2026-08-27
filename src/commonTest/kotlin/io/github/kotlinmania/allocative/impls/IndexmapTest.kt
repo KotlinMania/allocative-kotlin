@@ -1,4 +1,4 @@
-// port-lint: tests allocative/src/impls/indexmap.rs
+// port-lint: tests impls/indexmap.rs
 package io.github.kotlinmania.allocative.impls
 
 import io.github.kotlinmania.allocative.Allocative

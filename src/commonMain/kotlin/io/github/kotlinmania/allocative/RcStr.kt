@@ -1,4 +1,4 @@
-// port-lint: source allocative/src/rc_str.rs
+// port-lint: source rc_str.rs
 package io.github.kotlinmania.allocative
 
 /*

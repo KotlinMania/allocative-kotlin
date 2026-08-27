@@ -1,4 +1,4 @@
-// port-lint: source allocative/src/flamegraph.rs
+// port-lint: source flamegraph.rs
 package io.github.kotlinmania.allocative
 
 /*

@@ -1,4 +1,4 @@
-// port-lint: source allocative/src/size_of.rs
+// port-lint: source size_of.rs
 package io.github.kotlinmania.allocative
 
 /*
