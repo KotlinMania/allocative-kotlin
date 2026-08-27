@@ -1,4 +1,4 @@
-// port-lint: tests allocative_trait.rs
+// port-lint: tests allocative/src/allocative_trait.rs
 package io.github.kotlinmania.allocative
 
 import io.github.kotlinmania.allocative.key.Key

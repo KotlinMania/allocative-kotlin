@@ -1,3 +1,4 @@
+// port-lint: tests allocative/src/impls/hashbrown_util.rs
 package io.github.kotlinmania.allocative.impls
 
 import kotlin.test.Test

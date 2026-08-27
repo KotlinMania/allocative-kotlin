@@ -1,4 +1,4 @@
-// port-lint: source key.rs
+// port-lint: source allocative/src/key.rs
 package io.github.kotlinmania.allocative.key
 
 /*
