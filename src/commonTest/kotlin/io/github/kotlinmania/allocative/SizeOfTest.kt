@@ -1,4 +1,4 @@
-// port-lint: tests size_of.rs
+// port-lint: tests allocative/src/size_of.rs
 package io.github.kotlinmania.allocative
 
 import io.github.kotlinmania.allocative.key.Key

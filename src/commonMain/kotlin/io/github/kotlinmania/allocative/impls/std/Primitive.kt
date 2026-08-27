@@ -1,4 +1,4 @@
-// port-lint: source impls/std/primitive.rs
+// port-lint: source allocative/src/impls/std/primitive.rs
 package io.github.kotlinmania.allocative.impls.std
 
 /*

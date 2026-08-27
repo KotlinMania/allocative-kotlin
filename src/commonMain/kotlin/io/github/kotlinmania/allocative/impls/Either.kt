@@ -1,4 +1,4 @@
-// port-lint: source impls/either.rs
+// port-lint: source allocative/src/impls/either.rs
 package io.github.kotlinmania.allocative.impls
 
 /*
