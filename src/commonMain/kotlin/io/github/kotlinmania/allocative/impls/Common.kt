@@ -1,4 +1,4 @@
-// port-lint: source impls/common.rs
+// port-lint: source allocative/src/impls/common.rs
 package io.github.kotlinmania.allocative.impls
 
 import io.github.kotlinmania.allocative.key.Key

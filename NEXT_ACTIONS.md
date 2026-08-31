@@ -4,10 +4,10 @@ Based on AST analysis, here are the concrete next steps.
 
 ## Summary
 
-- **Files Present:** 19/51 (37.3%)
-- **Function parity:** 82/193 matched (target 177) — 42.5%
+- **Files Present:** 19/52 (36.5%)
+- **Function parity:** 82/195 matched (target 177) — 42.1%
 - **Class/type parity:** 16/53 matched (target 71) — 30.2%
-- **Combined symbol parity:** 98/246 matched (target 248) — 39.8%
+- **Combined symbol parity:** 98/248 matched (target 248) — 39.5%
 - **Average inline-code cosine:** 0.47 (function body across 19 matched files)
 - **Average documentation cosine:** 0.34 (doc text across 19 matched files)
 - **Cheat-zeroed Files:** 2
@@ -15,7 +15,7 @@ Based on AST analysis, here are the concrete next steps.
 
 ## Priority 1: Fix Incomplete High-Dependency Files
 
-### 1. visitor
+### 1. allocative.visitor
 - **Similarity:** 0.68 (needs 17% improvement)
 - **Dependencies:** 37
 - **Priority Score:** 37012004.0
@@ -26,7 +26,7 @@ Based on AST analysis, here are the concrete next steps.
 - **Symbol Deficit:** 1 (functions: 1, types: 0)
 - **Action:** Review and complete missing sections
 
-### 2. key
+### 2. allocative.key
 - **Similarity:** 0.25 (needs 60% improvement)
 - **Dependencies:** 19
 - **Priority Score:** 19061008.0
@@ -57,7 +57,7 @@ No missing high-value files detected.
 
 Every matched file is listed below with function and type symbol parity.
 
-### 1. visitor
+### 1. allocative.visitor
 
 - **Target:** `allocative.Visitor`
 - **Similarity:** 0.68
@@ -68,7 +68,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 3/3 matched
 - **Missing types:** _none_
 
-### 2. key
+### 2. allocative.key
 
 - **Target:** `key.Key`
 - **Similarity:** 0.25
@@ -90,7 +90,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 0/0 matched (target 1)
 - **Missing types:** _none_
 
-### 4. flamegraph
+### 4. allocative.flamegraph
 
 - **Target:** `allocative.FlameGraph`
 - **Similarity:** 0.62
@@ -113,7 +113,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 0/0 matched (target 1)
 - **Missing types:** _none_
 
-### 6. rc_str
+### 6. allocative.rc_str
 
 - **Target:** `allocative.RcStr`
 - **Similarity:** 0.28
@@ -148,7 +148,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Missing types:** _none_
 - **Tests:** 0/3 matched
 
-### 9. size_of
+### 9. allocative.size_of
 
 - **Target:** `allocative.SizeOf`
 - **Similarity:** 0.67
@@ -172,7 +172,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Missing types:** _none_
 - **Tests:** 0/1 matched
 
-### 11. global_root
+### 11. allocative.global_root
 
 - **Target:** `allocative.GlobalRoot`
 - **Similarity:** 0.55
@@ -195,7 +195,7 @@ Every matched file is listed below with function and type symbol parity.
 - **Types:** 0/0 matched (target 3)
 - **Missing types:** _none_
 
-### 13. allocative_trait
+### 13. allocative.allocative_trait
 
 - **Target:** `allocative.AllocativeTrait [ZERO]`
 - **Similarity:** 0.00
