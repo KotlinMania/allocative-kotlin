@@ -1,7 +1,7 @@
 {
   "name": "allocative-kotlin",
   "source": {
-    "path": "tmp/allocative/src",
+    "path": "tmp",
     "lang": "rust"
   },
   "target": {
