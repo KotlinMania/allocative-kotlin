@@ -1,4 +1,4 @@
-// port-lint: tests allocative/src/flamegraph.rs
+// port-lint: tests flamegraph.rs
 package io.github.kotlinmania.allocative
 
 /*

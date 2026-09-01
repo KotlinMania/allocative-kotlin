@@ -1,4 +1,4 @@
-// port-lint: source allocative/src/global_root.rs
+// port-lint: source global_root.rs
 package io.github.kotlinmania.allocative
 
 /*

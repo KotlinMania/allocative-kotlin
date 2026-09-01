@@ -1,4 +1,4 @@
-// port-lint: source allocative/src/impls/hashbrown_util.rs
+// port-lint: source impls/hashbrown_util.rs
 package io.github.kotlinmania.allocative.impls
 
 /*

@@ -1,4 +1,4 @@
-// port-lint: tests allocative/src/global_root.rs
+// port-lint: tests global_root.rs
 package io.github.kotlinmania.allocative
 
 import io.github.kotlinmania.allocative.key.Key

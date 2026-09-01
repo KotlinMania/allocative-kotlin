@@ -1,4 +1,4 @@
-// port-lint: source allocative/src/impls/serde_json.rs
+// port-lint: source impls/serde_json.rs
 package io.github.kotlinmania.allocative.impls
 
 /*
