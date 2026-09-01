@@ -1,4 +1,4 @@
-// port-lint: source allocative/src/impls/std/tuple.rs
+// port-lint: source impls/std/tuple.rs
 package io.github.kotlinmania.allocative.impls.std
 
 /*

@@ -1,4 +1,4 @@
-// port-lint: tests allocative/src/impls/std/primitive.rs
+// port-lint: tests impls/std/primitive.rs
 package io.github.kotlinmania.allocative.impls.std
 
 import io.github.kotlinmania.allocative.Allocative

@@ -1,4 +1,4 @@
-// port-lint: source allocative/src/impls/std/mem.rs
+// port-lint: source impls/std/mem.rs
 package io.github.kotlinmania.allocative.impls.std
 
 /*

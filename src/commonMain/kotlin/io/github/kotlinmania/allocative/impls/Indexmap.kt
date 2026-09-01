@@ -1,4 +1,4 @@
-// port-lint: source allocative/src/impls/indexmap.rs
+// port-lint: source impls/indexmap.rs
 package io.github.kotlinmania.allocative.impls
 
 /*

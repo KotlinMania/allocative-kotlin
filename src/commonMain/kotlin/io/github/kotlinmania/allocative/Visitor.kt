@@ -1,4 +1,4 @@
-// port-lint: source allocative/src/visitor.rs
+// port-lint: source visitor.rs
 package io.github.kotlinmania.allocative
 
 /*
