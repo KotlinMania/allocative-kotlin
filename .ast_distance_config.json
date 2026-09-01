@@ -16,6 +16,13 @@
   },
   "reexport_modules": [
     "lib",
-    "golden"
+    "lib.rs",
+    "allocative/src/lib.rs",
+    "golden",
+    "golden.rs",
+    "allocative/src/golden.rs",
+    "impls",
+    "impls.rs",
+    "allocative/src/impls.rs"
   ]
 }
