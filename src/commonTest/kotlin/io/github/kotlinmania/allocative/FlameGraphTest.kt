@@ -61,7 +61,7 @@ class FlameGraphTest {
         val fg = FlameGraphBuilder()
         val visitor = fg.rootVisitor()
 
-        for (i in 0 until 2) {
+        repeat(2) {
             val s = visitor.enter(Key.new("Struct"), 10)
             s.visitSimple(Key.new("a"), 3)
             val sh = s.enterShared(Key.new("p"), 6, p)

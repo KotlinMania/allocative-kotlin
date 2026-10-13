@@ -24,7 +24,7 @@ class SizeOfTest {
         override fun visit(visitor: Visitor) {
             val self = visitor.enterSelf(this, 8)
             val unique = self.enterUnique(Key.new("data"), 0)
-            for (i in data.indices) {
+            repeat(data.size) {
                 unique.visitSimple(Key.new("u32"), 4)
             }
             unique.exit()
