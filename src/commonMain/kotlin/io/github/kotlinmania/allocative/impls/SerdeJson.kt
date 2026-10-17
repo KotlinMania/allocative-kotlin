@@ -10,91 +10,87 @@ package io.github.kotlinmania.allocative.impls
  * of this source tree.
  */
 
-import io.github.kotlinmania.allocative.Allocative
 import io.github.kotlinmania.allocative.Visitor
+import io.github.kotlinmania.allocative.impls.std.visit
 import io.github.kotlinmania.allocative.key.Key
+import io.github.kotlinmania.serdejson.JsonMap
+import io.github.kotlinmania.serdejson.JsonNumber
+import io.github.kotlinmania.serdejson.Value
 
-public class AllocativeJsonNumber(
-    public val value: Double,
-) : Allocative {
-    override fun visit(visitor: Visitor) {
-        visitor.enterSelfSized(AllocativeJsonNumber::class, Double.SIZE_BYTES).exit()
-    }
+private val KEY_DATA: Key = Key.new("data")
+private val KEY_KEY: Key = Key.new("key")
+private val KEY_VALUE: Key = Key.new("value")
+private val KEY_NUMBER: Key = Key.new("Number")
+private val KEY_STRING: Key = Key.new("String")
+private val KEY_ARRAY: Key = Key.new("Array")
+private val KEY_OBJECT: Key = Key.new("Object")
+
+public fun JsonNumber.visit(
+    visitor: Visitor,
+    selfSizeBytes: Int = 8,
+) {
+    val v = visitor.enterSelf(this, selfSizeBytes)
+    // Number may have allocations, but it is opaque.
+    v.exit()
 }
 
-public class AllocativeJsonString(
-    public val value: String,
-) : Allocative {
-    override fun visit(visitor: Visitor) {
-        val self = visitor.enterSelf(this, value.length)
-        self.exit()
+public fun JsonMap.visit(
+    visitor: Visitor,
+    selfSizeBytes: Int = 8,
+    pointerSizeBytes: Int = 8,
+) {
+    val v = visitor.enterSelf(this, selfSizeBytes)
+    val dataVisitor = v.enterUnique(KEY_DATA, pointerSizeBytes)
+    for ((k, value) in iter()) {
+        dataVisitor.visitFieldWith(KEY_KEY, pointerSizeBytes) { child ->
+            k.visit(child, selfSizeBytes, pointerSizeBytes)
+        }
+        dataVisitor.visitFieldWith(KEY_VALUE, pointerSizeBytes) { child ->
+            value.visit(child, selfSizeBytes, pointerSizeBytes)
+        }
     }
+    dataVisitor.exit()
+    v.exit()
 }
 
-public sealed class AllocativeJsonValue : Allocative {
-    public object Null : AllocativeJsonValue() {
-        override fun visit(visitor: Visitor) {
-            val self = visitor.enterSelf(this, 0)
-            self.exit()
-        }
-    }
+public fun Value.visit(
+    visitor: Visitor,
+    selfSizeBytes: Int = 8,
+    pointerSizeBytes: Int = 8,
+) {
+    val v = visitor.enterSelf(this, selfSizeBytes)
+    when (this) {
+        is Value.Null -> {}
 
-    public class Bool(
-        public val value: Boolean,
-    ) : AllocativeJsonValue() {
-        override fun visit(visitor: Visitor) {
-            val self = visitor.enterSelf(this, 1)
-            self.exit()
-        }
-    }
+        is Value.Bool -> {}
 
-    public class Number(
-        public val number: AllocativeJsonNumber,
-    ) : AllocativeJsonValue() {
-        override fun visit(visitor: Visitor) {
-            val self = visitor.enterSelf(this, 8)
-            self.visitField(KEY_NUMBER, 8, number)
-            self.exit()
-        }
-    }
-
-    public class Str(
-        public val string: AllocativeJsonString,
-    ) : AllocativeJsonValue() {
-        override fun visit(visitor: Visitor) {
-            val self = visitor.enterSelf(this, string.value.length)
-            self.visitField(KEY_STRING, string.value.length, string)
-            self.exit()
-        }
-    }
-
-    public class Array(
-        public val elements: List<AllocativeJsonValue>,
-    ) : AllocativeJsonValue() {
-        override fun visit(visitor: Visitor) {
-            val self = visitor.enterSelf(this, elements.size * 8)
-            for (elem in elements) {
-                self.visitField(KEY_ARRAY, 8, elem)
+        is Value.Number -> {
+            v.visitFieldWith(KEY_NUMBER, selfSizeBytes) { child ->
+                value.visit(child, selfSizeBytes)
             }
-            self.exit()
         }
-    }
 
-    public class Obj(
-        public val entries: Map<String, AllocativeJsonValue>,
-    ) : AllocativeJsonValue() {
-        override fun visit(visitor: Visitor) {
-            val self = visitor.enterSelf(this, entries.size * 16)
-            for ((k, v) in entries) {
-                self.visitField(Key.new(k), 8, v)
+        is Value.Str -> {
+            v.visitFieldWith(KEY_STRING, pointerSizeBytes) { child ->
+                value.visit(child, selfSizeBytes, pointerSizeBytes)
             }
-            self.exit()
+        }
+
+        is Value.Array -> {
+            v.visitFieldWith(KEY_ARRAY, pointerSizeBytes) { child ->
+                val listVisitor = child.enter(CAPACITY_NAME, pointerSizeBytes * value.size)
+                for (elem in value) {
+                    elem.visit(listVisitor, selfSizeBytes, pointerSizeBytes)
+                }
+                listVisitor.exit()
+            }
+        }
+
+        is Value.Object -> {
+            v.visitFieldWith(KEY_OBJECT, pointerSizeBytes) { child ->
+                value.visit(child, selfSizeBytes, pointerSizeBytes)
+            }
         }
     }
-
-    private companion object {
-        val KEY_NUMBER: Key = Key.new("Number")
-        val KEY_STRING: Key = Key.new("String")
-        val KEY_ARRAY: Key = Key.new("Array")
-    }
+    v.exit()
 }

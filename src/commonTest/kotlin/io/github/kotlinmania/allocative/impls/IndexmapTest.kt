@@ -64,8 +64,7 @@ class IndexmapTest {
         set.insert(SizedValue("b"))
 
         val impl = RecordingVisitorImpl()
-        visitIndexSet(
-            set = set,
+        set.visit(
             visitor = rootVisitor(impl),
             selfSizeBytes = 24,
             referenceSizeBytes = 8,
@@ -86,8 +85,7 @@ class IndexmapTest {
         map.insert(SizedValue("k2"), SizedValue("v2"))
 
         val impl = RecordingVisitorImpl()
-        visitIndexMap(
-            map = map,
+        map.visit(
             visitor = rootVisitor(impl),
             selfSizeBytes = 32,
             referenceSizeBytes = 8,

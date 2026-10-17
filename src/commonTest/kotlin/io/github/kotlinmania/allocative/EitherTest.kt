@@ -10,8 +10,9 @@ package io.github.kotlinmania.allocative
  * of this source tree.
  */
 
-import io.github.kotlinmania.allocative.impls.Either
 import io.github.kotlinmania.allocative.impls.std.AllocativeInt
+import io.github.kotlinmania.allocative.impls.visit
+import io.github.kotlinmania.either.Either
 import kotlin.test.Test
 import kotlin.test.assertTrue
 
@@ -20,7 +21,9 @@ class EitherTest {
     fun testEitherLeft() {
         val either: Either<AllocativeInt, AllocativeInt> = Either.Left(AllocativeInt(1))
         val fg = FlameGraphBuilder()
-        fg.visitRoot(either)
+        val visitor = fg.rootVisitor()
+        either.visit(visitor)
+        visitor.exit()
         val output = fg.finishAndWriteFlameGraph()
         assertTrue(output.contains("Left"), "Output: $output")
     }
