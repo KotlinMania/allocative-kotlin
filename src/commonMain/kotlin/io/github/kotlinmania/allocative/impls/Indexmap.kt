@@ -26,44 +26,40 @@ internal fun addRawTableForLen(visitor: Visitor, len: Int, elementSizeBytes: Int
     }
 }
 
-// Visit an IndexSet as an ordered hash table with values and unused capacity.
-public fun <T : Allocative> visitIndexSet(
-    set: IndexSet<T>,
+public fun <T : Allocative> IndexSet<T>.visit(
     visitor: Visitor,
-    selfSizeBytes: Int,
-    referenceSizeBytes: Int,
-    elementSizeBytes: Int,
+    selfSizeBytes: Int = 8,
+    referenceSizeBytes: Int = 8,
+    elementSizeBytes: Int = 8,
 ) {
-    val selfVisitor = visitor.enterSelf(set, selfSizeBytes)
+    val selfVisitor = visitor.enterSelf(this, selfSizeBytes)
     val dataVisitor = selfVisitor.enterUnique(Key.new("data"), referenceSizeBytes)
-    for (value in set) {
+    for (value in this) {
         dataVisitor.visitField(Key.new("value"), elementSizeBytes, value)
     }
-    val unusedCapacity = set.capacity() - set.len()
+    val unusedCapacity = capacity() - len()
     dataVisitor.visitSimple(UNUSED_CAPACITY_NAME, unusedCapacity * elementSizeBytes)
     dataVisitor.exit()
-    addRawTableForLen(selfVisitor, set.len(), Int.SIZE_BYTES)
+    addRawTableForLen(selfVisitor, len(), Int.SIZE_BYTES)
     selfVisitor.exit()
 }
 
-// Visit an IndexMap as an ordered hash table with key-value entries and unused capacity.
-public fun <K : Allocative, V : Allocative> visitIndexMap(
-    map: IndexMap<K, V>,
+public fun <K : Allocative, V : Allocative> IndexMap<K, V>.visit(
     visitor: Visitor,
-    selfSizeBytes: Int,
-    referenceSizeBytes: Int,
-    keySizeBytes: Int,
-    valueSizeBytes: Int,
+    selfSizeBytes: Int = 8,
+    referenceSizeBytes: Int = 8,
+    keySizeBytes: Int = 8,
+    valueSizeBytes: Int = 8,
 ) {
-    val selfVisitor = visitor.enterSelf(map, selfSizeBytes)
+    val selfVisitor = visitor.enterSelf(this, selfSizeBytes)
     val dataVisitor = selfVisitor.enterUnique(Key.new("data"), referenceSizeBytes)
-    for ((key, value) in map) {
+    for ((key, value) in this) {
         dataVisitor.visitField(Key.new("key"), keySizeBytes, key)
         dataVisitor.visitField(Key.new("value"), valueSizeBytes, value)
     }
-    val unusedCapacity = map.capacity() - map.len()
+    val unusedCapacity = capacity() - len()
     dataVisitor.visitSimple(UNUSED_CAPACITY_NAME, unusedCapacity * (keySizeBytes + valueSizeBytes))
     dataVisitor.exit()
-    addRawTableForLen(selfVisitor, map.len(), Int.SIZE_BYTES)
+    addRawTableForLen(selfVisitor, len(), Int.SIZE_BYTES)
     selfVisitor.exit()
 }

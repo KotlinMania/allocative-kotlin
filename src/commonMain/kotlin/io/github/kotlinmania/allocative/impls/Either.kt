@@ -13,32 +13,21 @@ package io.github.kotlinmania.allocative.impls
 import io.github.kotlinmania.allocative.Allocative
 import io.github.kotlinmania.allocative.Visitor
 import io.github.kotlinmania.allocative.key.Key
+import io.github.kotlinmania.either.Either
 
-public sealed class Either<out A : Allocative, out B : Allocative> : Allocative {
-    public class Left<A : Allocative>(
-        public val value: A,
-        public val sizeBytes: Int = 8,
-    ) : Either<A, Nothing>() {
-        override fun visit(visitor: Visitor) {
-            val self = visitor.enterSelf(this, sizeBytes)
-            self.visitField(KEY_LEFT, sizeBytes, value)
-            self.exit()
-        }
-    }
+private val KEY_LEFT: Key = Key.new("Left")
+private val KEY_RIGHT: Key = Key.new("Right")
 
-    public class Right<B : Allocative>(
-        public val value: B,
-        public val sizeBytes: Int = 8,
-    ) : Either<Nothing, B>() {
-        override fun visit(visitor: Visitor) {
-            val self = visitor.enterSelf(this, sizeBytes)
-            self.visitField(KEY_RIGHT, sizeBytes, value)
-            self.exit()
-        }
+public fun <A : Allocative, B : Allocative> Either<A, B>.visit(
+    visitor: Visitor,
+    selfSizeBytes: Int = 8,
+    leftSizeBytes: Int = 8,
+    rightSizeBytes: Int = 8,
+) {
+    val self = visitor.enter(Key.new("either::Either"), selfSizeBytes)
+    when (this) {
+        is Either.Left -> self.visitField(KEY_LEFT, leftSizeBytes, value)
+        is Either.Right -> self.visitField(KEY_RIGHT, rightSizeBytes, value)
     }
-
-    private companion object {
-        val KEY_LEFT: Key = Key.new("Left")
-        val KEY_RIGHT: Key = Key.new("Right")
-    }
+    self.exit()
 }

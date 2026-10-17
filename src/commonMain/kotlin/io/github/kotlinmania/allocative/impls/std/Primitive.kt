@@ -13,13 +13,9 @@ package io.github.kotlinmania.allocative.impls.std
 import io.github.kotlinmania.allocative.Allocative
 import io.github.kotlinmania.allocative.Visitor
 
-// Rust impls Allocative directly on primitive types. Kotlin can't extend
-// existing primitives with an interface, so the upstream `impl Allocative for
-// uN/iN/bool/fN` set is rendered as faithful wrapper value classes. Each
-// wrapper holds the underlying primitive and reports a simple sized self to
-// the visitor, matching `visit_simple_sized::<Self>()` in the Rust source.
-// Wrapper classes intentionally mirror the project's existing `ManuallyDrop`
-// wrapper style in `Mem.kt`.
+// Primitive types are represented as wrapper value classes. Each wrapper
+// holds the underlying primitive and reports a simple sized self to the
+// visitor, matching the upstream primitive implementations.
 
 public class AllocativeByte(
     public val value: Byte,
@@ -112,9 +108,46 @@ public class AllocativeBoolean(
     }
 }
 
-// Rust's `usize` and `isize` are architecture-dependent (4 bytes on 32-bit
-// targets, 8 on 64-bit). Kotlin has no language-level analogue: Int and Long
-// are fixed-width. Faithful porting would need per-target actual size
-// constants, but no public Allocative caller in this repo currently exposes
-// usize/isize-typed fields. Leaving unported with this honest note rather
-// than guessing a size; revisit when an actual caller needs it.
+public fun Byte.visit(visitor: Visitor) {
+    visitor.visitSimpleSized(Byte::class, Byte.SIZE_BYTES)
+}
+
+public fun UByte.visit(visitor: Visitor) {
+    visitor.visitSimpleSized(UByte::class, UByte.SIZE_BYTES)
+}
+
+public fun Short.visit(visitor: Visitor) {
+    visitor.visitSimpleSized(Short::class, Short.SIZE_BYTES)
+}
+
+public fun UShort.visit(visitor: Visitor) {
+    visitor.visitSimpleSized(UShort::class, UShort.SIZE_BYTES)
+}
+
+public fun Int.visit(visitor: Visitor) {
+    visitor.visitSimpleSized(Int::class, Int.SIZE_BYTES)
+}
+
+public fun UInt.visit(visitor: Visitor) {
+    visitor.visitSimpleSized(UInt::class, UInt.SIZE_BYTES)
+}
+
+public fun Long.visit(visitor: Visitor) {
+    visitor.visitSimpleSized(Long::class, Long.SIZE_BYTES)
+}
+
+public fun ULong.visit(visitor: Visitor) {
+    visitor.visitSimpleSized(ULong::class, ULong.SIZE_BYTES)
+}
+
+public fun Float.visit(visitor: Visitor) {
+    visitor.visitSimpleSized(Float::class, Float.SIZE_BYTES)
+}
+
+public fun Double.visit(visitor: Visitor) {
+    visitor.visitSimpleSized(Double::class, Double.SIZE_BYTES)
+}
+
+public fun Boolean.visit(visitor: Visitor) {
+    visitor.visitSimpleSized(Boolean::class, 1)
+}
